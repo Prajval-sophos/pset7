@@ -25,6 +25,11 @@
             $sp = $sell[0]["shares"]*$stock["price"];
             CS50::query("DELETE FROM portfolios WHERE user_id =? AND symbol=?",$_SESSION["id"],$_POST["symbol"]);
             CS50::query("UPDATE users SET cash = cash + ? WHERE id=?",$sp,$_SESSION["id"]);
+            
+            //history
+            CS50::query("INSERT INTO history (id,transaction,symbol,shares,price) VALUES(?,?,?,?,?)",
+            $_SESSION["id"],'SELL',strtoupper($_POST["symbol"]),$sell[0]["shares"],$stock["price"]);
+            
             redirect("/");
         }
     }
