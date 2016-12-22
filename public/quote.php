@@ -20,14 +20,21 @@
         }
         else
         {
-            $s = lookup($_POST["symbol"]);
-            if($s == 0)
+            $stock = lookup($_POST["symbol"]);
+            if($stock == 0)
             {
                 apologize("Invalid Symbol!");
             }
             else
             {
-                render("quote.php", ["title" => "Quote"]);
+                $s = [
+                    "name" => $stock["name"],
+                    "symbol" => $stock["symbol"],
+                    "price" => $stock["price"]
+                    ];
+                
+                
+                render("quote.php", ["stock" => $s , "title" => "Quote"]);
             }
         }
     }
